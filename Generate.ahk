@@ -1,6 +1,6 @@
 RunGeneral(ctrl, *) {
     Global ShowNotesButton
-    Saved := BuddyGui.Submit(False)
+    Saved := AussieGUI.Submit(False)
     Output := ""
 
     UpdateTemplates()
@@ -8,7 +8,7 @@ RunGeneral(ctrl, *) {
         templateMap := TemplatesMaps.Get(Saved.PickedGeneralReason)
         Output := templateMap.Get(Saved.PickedGeneral)
 
-        showNotes := BuddyGui["ShowNotesButton"].Value
+        showNotes := AussieGUI["ShowNotesButton"].Value
         
         if (showNotes) {
             ToolsTab.Choose(1)
@@ -30,7 +30,7 @@ RunGeneral(ctrl, *) {
 
 RunAccount(ctrl, *) {
     Global ShowNotesButton
-    Saved := BuddyGui.Submit(False)
+    Saved := AussieGUI.Submit(False)
     Output := ""
 
     UpdateTemplates()
@@ -39,7 +39,7 @@ RunAccount(ctrl, *) {
         templateMap := TemplatesMaps.Get(Saved.PickedAccountReason)
         Output := templateMap.Get(Saved.PickedAccount)
 
-        showNotes := BuddyGui["ShowNotesButton"].Value
+        showNotes := AussieGUI["ShowNotesButton"].Value
         
         if (showNotes) {
             ToolsTab.Choose(1)
@@ -61,7 +61,7 @@ RunAccount(ctrl, *) {
 
 RunFault(ctrl, *) {
     Global ShowNotesButton
-    Saved := BuddyGui.Submit(False)
+    Saved := AussieGUI.Submit(False)
     Output := ""
 
     UpdateTemplates()
@@ -70,7 +70,7 @@ RunFault(ctrl, *) {
         templateMap := TemplatesMaps.Get(Saved.PickedFaultReason)
         Output := templateMap.Get(Saved.PickedFault)
 
-        showNotes := BuddyGui["ShowNotesButton"].Value
+        showNotes := AussieGUI["ShowNotesButton"].Value
         
         if (showNotes) {
             ToolsTab.Choose(1)
@@ -92,7 +92,7 @@ RunFault(ctrl, *) {
 
 RunDelivery(ctrl, *) {
     Global ShowNotesButton
-    Saved := BuddyGui.Submit(False)
+    Saved := AussieGUI.Submit(False)
     Output := ""
 
     UpdateTemplates()
@@ -101,7 +101,7 @@ RunDelivery(ctrl, *) {
         templateMap := TemplatesMaps.Get(Saved.PickedDeliveryReason)
         Output := templateMap.Get(Saved.PickedDelivery)
 
-        showNotes := BuddyGui["ShowNotesButton"].Value
+        showNotes := AussieGUI["ShowNotesButton"].Value
         
         if (showNotes) {
             ToolsTab.Choose(1)
@@ -123,7 +123,7 @@ RunDelivery(ctrl, *) {
 
 RunComplaint(ctrl, *) {
     Global ShowNotesButton
-    Saved := BuddyGui.Submit(False)
+    Saved := AussieGUI.Submit(False)
     Output := ""
 
     UpdateTemplates()
@@ -132,7 +132,7 @@ RunComplaint(ctrl, *) {
         templateMap := TemplatesMaps.Get(Saved.PickedComplaintReason)
         Output := templateMap.Get(Saved.PickedComplaint)
 
-        showNotes := BuddyGui["ShowNotesButton"].Value
+        showNotes := AussieGUI["ShowNotesButton"].Value
         
         if (showNotes) {
             ToolsTab.Choose(1)
@@ -154,7 +154,7 @@ RunComplaint(ctrl, *) {
 
 RunTCS(ctrl, *) {
     Global ShowNotesButton
-    Saved := BuddyGui.Submit(False)
+    Saved := AussieGUI.Submit(False)
     Output := ""
 
     UpdateTemplates()
@@ -163,7 +163,7 @@ RunTCS(ctrl, *) {
         templateMap := TemplatesMaps.Get(Saved.PickedTCSReason)
         Output := templateMap.Get(Saved.PickedTCS)
 
-        showNotes := BuddyGui["ShowNotesButton"].Value
+        showNotes := AussieGUI["ShowNotesButton"].Value
         
         if (showNotes) {
             ToolsTab.Choose(1)
