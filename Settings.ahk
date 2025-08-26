@@ -1,14 +1,14 @@
 AlwaysOnTopSetting := IniRead("config.ini", "Settings", "AlwaysOnTop")
 InitialOntopState := AlwaysOnTopSetting == "True" ? 1 : 0
 
-BuddyGui["AlwaysOnTop"].Value := InitialOntopState
+AussieGUI["AlwaysOnTop"].Value := InitialOntopState
 
 ApplyOntop(isOntop) {
     if isOntop {
-        BuddyGui.Opt("+AlwaysOnTop")  ; Enable Always on Top
+        AussieGUI.Opt("+AlwaysOnTop")  ; Enable Always on Top
     }
     else {
-        BuddyGui.Opt("-AlwaysOnTop")  ; Disable Always on Top
+        AussieGUI.Opt("-AlwaysOnTop")  ; Disable Always on Top
     }
 }
 
@@ -26,7 +26,7 @@ ApplyOntop(initialOntopState)
 NotepadSetting := IniRead("config.ini", "Settings", "ShowNotepad")
 InitialNotepadState := NotepadSetting == "True" ? 1 : 0
 
-BuddyGui["ShowNotesButton"].Value := InitialNotepadState
+AussieGUI["ShowNotesButton"].Value := InitialNotepadState
 
 ShowNotepad(isExpanded) {
 
@@ -34,14 +34,14 @@ ShowNotepad(isExpanded) {
     Global ToolsTab
 
     if isExpanded {
-        BuddyGui["NotePadEmbedded"].Visible := 1
-        BuddyGui.Show("h815")
+        AussieGUI["NotePadEmbedded"].Visible := 1
+        AussieGUI.Show("h815")
         ToolsTab.Move(,, , 600)
         ToolsTab.Choose(1)
     }
     else {
-        BuddyGui["NotePadEmbedded"].Visible := 0
-        BuddyGui.Show("h295 w630")
+        AussieGUI["NotePadEmbedded"].Visible := 0
+        AussieGUI.Show("h295 w630")
         ToolsTab.Move(,, , 80)
     }
 }
@@ -60,16 +60,15 @@ ShowNotepad(initialNotepadState)
 DarkmodeSetting := IniRead("config.ini", "Settings", "Darkmode")
 initialDarkmodeState := DarkmodeSetting == "True" ? 1 : 0
 
-BuddyGui["DarkModeButton"].Value := initialDarkmodeState
+AussieGUI["DarkModeButton"].Value := initialDarkmodeState
 
 ; Function to apply darkmode settings
 ApplyDarkmode(isDark) {
     if isDark {
-        BuddyGui.SetFont("cFFFFFF")
-        BuddyGui.BackColor := "014f13"
+        AussieGUI.SetFont("cFFFFFF")
+        AussieGUI.BackColor := "014f13"
         NotesGui.BackColor := "014f13"
         TemplatesGui.BackColor := "014f13"
-        HotkeysGui.BackColor := "014f13"
         TemplateTab.Opt("xm h80 w610 Background01370d cFFFFFF")
         ToolsTab.Opt("WP h80 Background01370d cFFFFFF vToolsTab")
         AlwaysOnTopCheckBoxText.Opt("+BackgroundTrans cFFFFFF")
@@ -80,14 +79,11 @@ ApplyDarkmode(isDark) {
         Notes.SetFont("s10", "Nunito")
         Templates.Opt("Backgroundc0f0f13 cFFFFFF")
         Templates.SetFont("s10", "Nunito")
-        Hotkeys.Opt("cFFFFFF")
-        Hotkeys.SetFont("s10", "Nunito")
     } else {
-        BuddyGui.BackColor := "01711b"
-        BuddyGui.Color := "c000000"
+        AussieGUI.BackColor := "01711b"
+        AussieGUI.Color := "c000000"
         NotesGui.BackColor := "01711b"
         TemplatesGui.BackColor := "01711b"
-        HotkeysGui.BackColor := "01711b"
         TemplateTab.Opt("xm h80 w610 BackgroundWhite c000000")
         ToolsTab.Opt("WP h80 BackgroundWhite vToolsTab c000000")
         AlwaysOnTopCheckBoxText.Opt("c000000")
@@ -98,8 +94,6 @@ ApplyDarkmode(isDark) {
         Notes.SetFont("s10", "Nunito")
         Templates.Opt("BackgroundcFFFFFF c000000")
         Templates.SetFont("s10", "Nunito")
-        Hotkeys.Opt("cFFFFFF")
-        Hotkeys.SetFont("s10", "Nunito")
     }
 }
 

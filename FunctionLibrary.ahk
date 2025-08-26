@@ -1,38 +1,3 @@
-;------------------------ Make it Draggable --------------------------
-
-LShift & LButton::
-EWD_MoveWindow(*)
-{
-    CoordMode "Mouse"  ; Switch to screen/absolute coordinates.
-    MouseGetPos &EWD_MouseStartX, &EWD_MouseStartY, &EWD_MouseWin
-    WinGetPos &EWD_OriginalPosX, &EWD_OriginalPosY,,, EWD_MouseWin
-    if !WinGetMinMax(EWD_MouseWin)  ; Only if the window isn't maximized 
-        SetTimer EWD_WatchMouse, 10 ; Track the mouse as the user drags it.
-
-    EWD_WatchMouse()
-    {
-        if !GetKeyState("LButton", "P")  ; Button has been released, so drag is complete.
-        {
-            SetTimer , 0
-            return
-        }
-        if GetKeyState("Escape", "P")  ; Escape has been pressed, so drag is cancelled.
-        {
-            SetTimer , 0
-            WinMove EWD_OriginalPosX, EWD_OriginalPosY,,, EWD_MouseWin
-            return
-        }
-        ; Otherwise, reposition the window to match the change in mouse coordinates
-        ; caused by the user having dragged the mouse:
-        CoordMode "Mouse"
-        MouseGetPos &EWD_MouseX, &EWD_MouseY
-        WinGetPos &EWD_WinX, &EWD_WinY,,, EWD_MouseWin
-        SetWinDelay -1   ; Makes the below move faster/smoother.
-        WinMove EWD_WinX + EWD_MouseX - EWD_MouseStartX, EWD_WinY + EWD_MouseY - EWD_MouseStartY,,, EWD_MouseWin
-        EWD_MouseStartX := EWD_MouseX  ; Update for the next timer-call to this subroutine.
-        EWD_MouseStartY := EWD_MouseY
-    }
-}
 
 ;------------------------- Tools -------------------------------------
 
@@ -103,7 +68,7 @@ NSLookup(*)
 ; This code is AI because I really cbf doing date math on AHK. Sam is working on refactoring this
 ProRataCalc(*) {
     ProrataGui := Gui(,"Buddy Tool Kit")
-    ProrataGui.BackColor := "c007ba8"
+    ProrataGui.BackColor := "01711b"
     ProrataGui.SetFont("s10")
     ProrataGui.Add("Text", "cFFFFFF", "Start of billing cycle")
     ProrataGui.Add("MonthCal", "yp+20 vBillingStart")
@@ -162,7 +127,7 @@ Notepad(DarkmodeButton, *) {
 
     NotesGui := Gui("+Resize", "Notepad")
     NotesGui.SetFont("s10", "Nunito")
-    NotesGui.BackColor := "c007ba8"
+    NotesGui.BackColor := "01711b"
     
     ; Create the edit control
     Notes := NotesGui.Add("Edit", "w700 h600", "")
@@ -191,7 +156,7 @@ TemplatesPad(*) {
     if !TemplatesGui {  ; Only create a new GUI if it doesn't exist
         TemplatesGui := Gui(,"Templates")
         TemplatesGui.SetFont("s10","Nunito")
-        TemplatesGui.BackColor := "c007ba8"
+        TemplatesGui.BackColor := "01711b"
         Templates := TemplatesGui.Add("Edit", "h600 w685", "")
         
         ; Add handler for GUI close to reset the variables
@@ -206,7 +171,7 @@ HotkeysPad(*) {
     if !HotkeysGui {
         HotkeysGui := Gui(,"Available Hotkeys")
         HotkeysGui.SetFont("s10","Nunito")
-        HotkeysGui.BackColor := "c007ba8"
+        HotkeysGui.BackColor := "01711b"
         Hotkeys := HotkeysGui.Add("Text", "+Wrap cFFFFFF", "Available Hotkeys:`n`n@@ - Your email`n`n~~ - Date 7 calendar days from now. For abandoment comms`n`nCTRL+S - Randomized signature for app faults. Also checks the publish to app checkbox`n`nCTRL+DEL - Content aware search ie. Superlookup")
         
         HotkeysGui.OnEvent("Close", (*) => (HotkeyssGui := "", Hotkeys := ""))
@@ -286,7 +251,7 @@ Startup(*)
 SaveCustomerName(ctrl, *)
 {
     Global ShowNotesButton
-    Saved:= BuddyGui.Submit(False)
+    Saved:= AussieGUI.Submit(False)
 
     Global Customer := Saved.CustomerName
 }
@@ -366,51 +331,16 @@ RunGPT(*) {
     A_Clipboard := PixelGetColor(MouseX, MouseY)
 }
 
-; Automation for queueberts
-
-RunQueues(ctrl, *) {
-    showNotes := BuddyGui["ShowNotesButton"].Value
-
-    Team := ["Sam", "Jordan", "Ben", "Yazid", "Jakob"]
-    AdditionalTeam := Team.Clone() 
-    
-    Quarantine := GetRandomMember(&Team)
-    Submit := GetRandomMember(&Team)
-    Manual := GetRandomMember(&Team)
-    HFCFTTC := GetRandomMember(&Team)
-    Complaints := GetRandomMember(&Team)
-    Calls := GetRandomMember(&AdditionalTeam)
-    
-    Output := "Assignees for the main queues for the day:`n`nQuarantine: " Quarantine "`nSubmit Order: " Submit "`nManual: " Manual "`nHFC/FTTC: " HFCFTTC "`n`nComplaints: " Complaints "`nCalls: " Calls ""
-
-    if (showNotes) {
-        ToolsTab.Choose(1)
-        ControlFocus NotePadEmbedded
-        NotePadEmbedded.Focus()
-        Send Output
-    } else {
-        TemplatesPad()
-        ControlFocus Templates
-        Templates.Focus()
-        Send Output
-    }
-    
-    GetRandomMember(&TeamArray) {
-        Randomizer := Random(1, TeamArray.Length)
-        return TeamArray.RemoveAt(Randomizer)
-    }
-}
-
 ; Everything below this is the update functions
 
-VersionNumber := "6.1"
+VersionNumber := "1.0"
 
 Download("https://raw.githubusercontent.com/EffexDev/Buddy-Telco-Widget/refs/heads/main/version.ini", A_WorkingDir . "\version.ini")
 global VersionNumberCheck := IniRead("version.ini", "Version", "VersionNumber")
 
 if VersionNumberCheck > VersionNumber {
     AutoUpdateGui := Gui("-Caption +AlwaysOnTop","Buddy Tool Kit")
-    AutoUpdateGui.BackColor := "c007ba8"
+    AutoUpdateGui.BackColor := "01711b"
     AutoUpdateGui.SetFont("s10")
     AutoUpdateGui.Show("w150 h70")
     AutoUpdateGui.Add("Text","x+13 y+5 cFFFFFF", "Update Available")
@@ -429,7 +359,7 @@ UpdateWidgetCheck(*) {
     
     if VersionNumberCheck > VersionNumber {
         Global CheckUpdateGui := Gui("-Caption +AlwaysOnTop","Buddy Tool Kit")
-        CheckUpdateGui.BackColor := "c007ba8"
+        CheckUpdateGui.BackColor := "01711b"
         CheckUpdateGui.SetFont("s10")
         CheckUpdateGui.Show("w150 h70")
         CheckUpdateGui.Add("Text","x+13 y+5 cFFFFFF", "Update Available")
@@ -444,7 +374,7 @@ UpdateWidgetCheck(*) {
     }
     else {
         CheckUpdateGui := Gui("-Caption +AlwaysOnTop","Buddy Tool Kit")
-        CheckUpdateGui.BackColor := "c007ba8"
+        CheckUpdateGui.BackColor := "01711b"
         CheckUpdateGui.SetFont("s10")
         CheckUpdateGui.Show("w150 h70")
         CheckUpdateGui.Add("Text","x+13 y+5 cFFFFFF", "You're up to date!")
@@ -459,7 +389,7 @@ UpdateWidgetCheck(*) {
 
 UpdateWidget(*) {
     LoadingGui := Gui("-Caption","Buddy Tool Kit")
-    LoadingGui.BackColor := "c007ba8"
+    LoadingGui.BackColor := "01711b"
     LoadingGui.SetFont("s10")
     LoadingGui.Show("w200 h60")
     LoadingGui.Add("Text", "cFFFFFF", "Updating")
@@ -470,23 +400,23 @@ UpdateWidget(*) {
     Sleep "500"    
     LoadingGui["MyProgress"].Value := 12
     Sleep "500"
-    Download("https://raw.githubusercontent.com/EffexDev/Buddy-Telco-Widget/refs/heads/main/FunctionLibrary.ahk", A_WorkingDir . "\FunctionLibrary.ahk")
+    Download("https://raw.githubusercontent.com/EffexDev/aussiebroadband-widget/refs/heads/main/FunctionLibrary.ahk", A_WorkingDir . "\FunctionLibrary.ahk")
     LoadingGui["MyProgress"].Value := 36
     Sleep "500"
-    Download("https://raw.githubusercontent.com/EffexDev/Buddy-Telco-Widget/refs/heads/main/Generate.ahk", A_WorkingDir . "\Generate.ahk")
+    Download("https://raw.githubusercontent.com/EffexDev/aussiebroadband-widget/refs/heads/main/Generate.ahk", A_WorkingDir . "\Generate.ahk")
     LoadingGui["MyProgress"].Value := 90
     Sleep "1000"
-    Download("https://raw.githubusercontent.com/EffexDev/Buddy-Telco-Widget/refs/heads/main/Settings.ahk", A_WorkingDir . "\Settings.ahk")
+    Download("https://raw.githubusercontent.com/EffexDev/aussiebroadband-widget/refs/heads/main/Settings.ahk", A_WorkingDir . "\Settings.ahk")
     LoadingGui["MyProgress"].Value := 2
     Sleep "500"
-    Download("https://raw.githubusercontent.com/EffexDev/Buddy-Telco-Widget/refs/heads/main/Templates.ahk", A_WorkingDir . "\Templates.ahk")
+    Download("https://raw.githubusercontent.com/EffexDev/aussiebroadband-widget/refs/heads/main/Templates.ahk", A_WorkingDir . "\Templates.ahk")
     LoadingGui["MyProgress"].Value := 57
     Sleep "500"
-    Download("https://raw.githubusercontent.com/EffexDev/Buddy-Telco-Widget/refs/heads/main/config.ini", A_WorkingDir . "\config.ini")
+    Download("https://raw.githubusercontent.com/EffexDev/aussiebroadband-widget/refs/heads/main/config.ini", A_WorkingDir . "\config.ini")
     LoadingGui["MyProgress"].Value := 88
-    Download("https://raw.githubusercontent.com/EffexDev/Buddy-Telco-Widget/refs/heads/main/BuddyToolKit.ahk", A_WorkingDir . "\BuddyToolKit.ahk")
+    Download("https://raw.githubusercontent.com/EffexDev/aussiebroadband-widget/refs/heads/main/AussieWidget.ahk", A_WorkingDir . "\AussieWidget.ahk")
     LoadingGui["MyProgress"].Value := 100
-    Download("https://raw.githubusercontent.com/EffexDev/Buddy-Telco-Widget/refs/heads/main/Changelog.txt", A_WorkingDir . "\Changelog.txt")
+    Download("https://raw.githubusercontent.com/EffexDev/aussiebroadband-widget/refs/heads/main/Changelog.txt", A_WorkingDir . "\Changelog.txt")
     LoadingGui.Destroy
     MsgBox "Update Complete"
     Run "Changelog.txt"
